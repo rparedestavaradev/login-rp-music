@@ -10,6 +10,5 @@ public interface UserService {
     Optional<User> byUId(Long Id);
     User login(User user);
     void deleteUser(Long id);
-
     void register(User user);
 }

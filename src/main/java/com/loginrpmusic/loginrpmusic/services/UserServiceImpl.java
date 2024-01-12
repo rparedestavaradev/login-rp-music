@@ -1,5 +1,6 @@
 package com.loginrpmusic.loginrpmusic.services;
 
+import com.loginrpmusic.loginrpmusic.exception.InvalidRequestException;
 import com.loginrpmusic.loginrpmusic.models.entity.User;
 import com.loginrpmusic.loginrpmusic.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,13 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void register(User user) {
+        if (userExistsByEmail(user.getEmail())) {
+            throw new InvalidRequestException("The email already exists");
+        }
+        repository.save(user);
+    }
 
+    private boolean userExistsByEmail(String email) {
+        return repository.findByEmail(email).isPresent();
     }
 }
